@@ -1,0 +1,24 @@
+.clinic-card{
+    display:flex;
+    margin-top:5rem;
+}
+.clinic-heading{
+    font-size: 2rem;
+    color: #0070c0;
+    margin-bottom: 1rem;
+}
+.contact-wrp{
+    display: flex;
+}
+.clinic-telephone{
+    margin-right: 3rem;
+}
+.clinic-card:last-child{
+    margin-bottom: 5rem;
+}
+.clinic-description-wrp{
+    width:75%;
+}
+.clinic-img{
+    margin-right:1rem
+}
