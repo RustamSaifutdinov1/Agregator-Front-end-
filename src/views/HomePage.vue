@@ -4,7 +4,7 @@
       <div class="row">
         <div class="clinics-wrp">
           <div class="clinic-card" v-for="clinic in listClinics" v-bind:key="clinic.id">
-            <div class="clinic-img" style="width: 250px;height: 250px;background-color: darkgrey"></div>
+            <img class="clinic-img" :src="clinic.ClinicPhoto" style="width: 250px;height: 250px;">
             <div class="clinic-description-wrp">
               <div class="clinic-heading">{{clinic.ClinicName}}</div>
               <div class="contact-wrp">

@@ -2,15 +2,15 @@
   <section class="clinic-main-info">
     <div class="container">
       <div class="row">
-        <div class="clinic-img" style="width: 250px;height: 250px;background-color: darkgrey"></div>
+        <img class="clinic-img" :src="clinic.ClinicPhoto" style="width: 250px;height: 250px;">
         <div class="clinic-description-wrp">
-          <div class="clinic-heading">Ortus</div>
+          <div class="clinic-heading">{{ clinic.ClinicName }}</div>
           <div class="contact-wrp">
-            <p class="clinic-telephone">+7(917)498-91-25</p>
-            <p class="clinic-work-time">Пн-Пт: 9:00 - 20:00</p>
+            <p class="clinic-telephone">{{ clinic.ClinicTelephone }}</p>
+            <p class="clinic-work-time">{{ clinic.ClinicWork_time }}</p>
           </div>
-          <p class="clinic-content">Клиника понравилась, очень уютная. Персонал вызывает доверие, сразу же сделали необходимый снимок и все доступно и грамотно объяснили, описали проблемы, ход лечения. </p>
-          <p class="clinic-address">ул. Восход, д. 16</p>
+          <p class="clinic-content">{{ clinic.ClinicContent }}</p>
+          <p class="clinic-address">{{ clinic.ClinicAddress }}</p>
         </div>
       </div>
     </div>
@@ -18,37 +18,12 @@
   <section class="clinic-doctors">
     <div class="container">
       <div class="row">
-        <div class="doctors-heading heading">Врачи стоматологии Ortus</div>
+        <div class="doctors-heading heading">Врачи стоматологии {{ clinic.ClinicName }}</div>
         <div class="doctors-wrp">
-          <div class="doctor-card col-4">
-            <div class="doctor-img" style="height: 250px;background-color: darkgrey"></div>
-            <p class="doctor-name">Иванов Иван Иванович</p>
-            <p class="doctor-content">Врач терапевт</p>
-          </div>
-          <div class="doctor-card col-4">
-            <div class="doctor-img" style="height: 250px;background-color: darkgrey"></div>
-            <p class="doctor-name">Иванов Иван Иванович</p>
-            <p class="doctor-content">Врач терапевт</p>
-          </div>
-          <div class="doctor-card col-4">
-            <div class="doctor-img" style="height: 250px;background-color: darkgrey"></div>
-            <p class="doctor-name">Иванов Иван Иванович</p>
-            <p class="doctor-content">Врач терапевт</p>
-          </div>
-          <div class="doctor-card col-4">
-            <div class="doctor-img" style="height: 250px;background-color: darkgrey"></div>
-            <p class="doctor-name">Иванов Иван Иванович</p>
-            <p class="doctor-content">Врач терапевт</p>
-          </div>
-          <div class="doctor-card col-4">
-            <div class="doctor-img" style="height: 250px;background-color: darkgrey"></div>
-            <p class="doctor-name">Иванов Иван Иванович</p>
-            <p class="doctor-content">Врач терапевт</p>
-          </div>
-          <div class="doctor-card col-4">
-            <div class="doctor-img" style="height: 250px;background-color: darkgrey"></div>
-            <p class="doctor-name">Иванов Иван Иванович</p>
-            <p class="doctor-content">Врач терапевт</p>
+          <div class="doctor-card col-4" v-for="doctor in doctors">
+            <img class="doctor-img" style="height: 250px;background-color: darkgrey">
+            <p class="doctor-name">{{ doctor.name }}</p>
+            <p class="doctor-content">{{ doctor.content }}</p>
           </div>
         </div>
       </div>
@@ -58,32 +33,11 @@
     <div class="container">
       <div class="row">
         <div class="services-heading heading">Услуги</div>
-        <div class="service-card col-4">
+        <div class="service-card col-4" v-for="service in services">
           <div class="service-img" style="height: 250px;background-color: darkgrey"></div>
           <div class="service-text-wrp">
-            <p class="service-name">Терапия</p>
-            <p class="service-price">12 000руб</p>
-          </div>
-        </div>
-        <div class="service-card col-4">
-          <div class="service-img" style="height: 250px;background-color: darkgrey"></div>
-          <div class="service-text-wrp">
-            <p class="service-name">Терапия</p>
-            <p class="service-price">12 000руб</p>
-          </div>
-        </div>
-        <div class="service-card col-4">
-          <div class="service-img" style="height: 250px;background-color: darkgrey"></div>
-          <div class="service-text-wrp">
-            <p class="service-name">Терапия</p>
-            <p class="service-price">12 000руб</p>
-          </div>
-        </div>
-        <div class="service-card col-4">
-          <div class="service-img" style="height: 250px;background-color: darkgrey"></div>
-          <div class="service-text-wrp">
-            <p class="service-name">Терапия</p>
-            <p class="service-price">12 000руб</p>
+            <p class="service-name">{{ service.name }}</p>
+            <p class="service-price">{{ service.price }}</p>
           </div>
         </div>
       </div>
@@ -99,20 +53,32 @@ export default {
   props: ['id'],
   data(){
     return{
-      clinic:{}
+      clinic:{},
+      doctors:[],
+      services:[]
     }
   },
   created() {
     this.loadClinic()
+    this.loadDoctors()
+    this.loadServices()
   },
   methods:{
     async loadClinic(){
       this.clinic = await fetch(
           `${store.getters.getServerUrl}/clinics/${this.id}`
       ).then(response=>response.json())
-      console.log(this.clinic)
-      console.log(this.id)
-    }
+    },
+    async loadDoctors(){
+      this.doctors = await fetch(
+          `${store.getters.getServerUrl}/clinics/${this.id}/doctors`
+      ).then(response=>response.json())
+    },
+    async loadServices(){
+      this.services = await fetch(
+          `${store.getters.getServerUrl}/clinics/${this.id}/services`
+      ).then(response=>response.json())
+    },
   }
 }
 </script>
