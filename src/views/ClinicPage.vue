@@ -52,6 +52,40 @@
       </div>
     </div>
   </section>
+  <section class="clinic-reviews">
+    <div class="container">
+      <div class="services-heading heading">Отзывы</div>
+      <div class="review-form">
+        <form>
+          <div class="form-group name-group">
+            <label for="inputName">Имя</label>
+            <input type="name" class="form-control" id="inputName" placeholder="Введите ваше имя">
+          </div>
+          <div class="form-group email-group">
+            <label for="inputEmail">E-mail</label>
+            <input type="email" class="form-control" id="inputEmail" placeholder="Введите ваш E-mail">
+          </div>
+          <div class="form-group ">
+            <label for="inputText">Сообщение</label>
+            <textarea class="form-control" id="inputText" rows="3"></textarea>
+          </div>
+          <div class="form-check-wrp rating-area">
+              <input class="form-check-input" type="radio" name="ratingRadios" id="rating1" value="1" >
+              <label class="form-check-label" for="rating1"></label>
+              <input class="form-check-input" type="radio" name="ratingRadios" id="rating2" value="2">
+              <label class="form-check-label" for="rating2"></label>
+              <input class="form-check-input" type="radio" name="ratingRadios" id="rating3" value="3">
+              <label class="form-check-label" for="rating3"></label>
+              <input class="form-check-input" type="radio" name="ratingRadios" id="rating4" value="4">
+              <label class="form-check-label" for="rating4"></label>
+              <input class="form-check-input" type="radio" name="ratingRadios" id="rating5" value="5">
+              <label class="form-check-label" for="rating5"></label>
+          </div>
+          <button type="submit" class="btn btn-primary">Отправить</button>
+        </form>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -123,5 +157,45 @@ export default {
 }
 .service-name{
   margin: 1rem 0;
+}
+.form-check-wrp{
+  display: flex;
+}
+.review-form .btn{
+  margin:0 auto;
+  display: block;
+}
+.rating-area {
+  overflow: hidden;
+  width: 150px;
+}
+.rating-area:not(:checked) > input {
+  display: none;
+}
+.rating-area:not(:checked) > label {
+  float: right;
+  width: 30px;
+  padding: 0;
+  cursor: pointer;
+  font-size: 25px;
+  line-height: 32px;
+  color: #d1d1d1;
+}
+.rating-area:not(:checked) > label:before {
+  content: '★';
+}
+.rating-area > input:checked ~ label {
+  color: #007bff;
+}
+.rating-area:not(:checked) > label:hover,
+.rating-area:not(:checked) > label:hover ~ label {
+  color: #007bff;
+}
+.rating-area > input:checked + label:hover,
+.rating-area > input:checked + label:hover ~ label,
+.rating-area > input:checked ~ label:hover,
+.rating-area > input:checked ~ label:hover ~ label,
+.rating-area > label:hover ~ input:checked ~ label {
+  color: #007bff;
 }
 </style>
